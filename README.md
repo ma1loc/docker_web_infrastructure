@@ -10,3 +10,6 @@ Instead of writing a simple README file, I decided to turn my experience into th
     Docker Web Infrastructure — Inception Project
   </a>
 </p>
+
+
+## About the project structure (Working on it)
