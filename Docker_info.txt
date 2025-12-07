@@ -1,2 +1,0 @@
-Instruction of docker file:
-    FROM    -> spesific the based image OS or frimwork of the image
