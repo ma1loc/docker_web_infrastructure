@@ -1,0 +1,33 @@
+>>> Docker Commands <<<
+	sudo docker images		// show images info
+	sudo docker build "Dockerfile"		// dockerfile blueprint of an image, command create imgae from Dockerfile
+	
+	>>> some times we need to delete first the container then the image
+	// delete a container:
+	sudo docker ps -a		// will shows all info about container you have and it's ID
+	sudo docker rm 7e492d1fac27		// delete container
+	sudo docker rmi f7931603f70e	// delete an imgae
+	sudo docker build -t 'Image identifier' 'path of dockerfile'
+
+>>> about mariadb Dockerfile <<<
+	# this command will executed intel the container is start
+	# when it's start will execute the commands 'CMD'
+	# mariadbd -> mariadb deamon
+	# Run the MariaDB process as the "mysql" system user
+	CMD ["mariadbd", "--user=mysql"]
+	Run is working (Building docker image)
+	
+>>> about layer caching in docker
+	// every line in the dockerfile is a layer 
+	// if the run this image again and every dockerfile layer is not 
+		changed will just execute the layer caching, if yes will rebuilt
+		and what every after that line that will rebuilt is not change will
+		rebuilt too
+ 
+
+# instuctions
+    # FROM
+    # COPY
+    # RUN	-> executed we image is build
+    # EXPOSE
+    # CMD	-> executed we container is start

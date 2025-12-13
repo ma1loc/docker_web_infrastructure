@@ -1,24 +1,21 @@
-# instuctions
-    # FROM
-    # COPY
-    # RUN
-    # EXPOSE
-    # CMD
-
-# first thing first the based image for MariaDB
 FROM debian:trixie
 
-# depandences of the MariaDB will done here
-# add requrments
+<<<<<<< Updated upstream
+RUN apt update && apt install -y mariadb-server
 
-RUN sudo apt update -y
-RUN sudo apt install mariadb-server -y
-# what is this for ?
-# RUN sudo mysql_secure_installation
-RUN sudo systemctl start mariadb
-    
-# chose port will be open
+RUN mkdir -p /run/mysqld && \
+	chown -R mysql:mysql /run/mysqld
+
 EXPOSE 3306
 
-# what is the diffrence between CMD and RUN?
+CMD ["mariadbd", "--user=mysql"]
+=======
+RUN sudo apt update -y
+RUN sudo apt install mariadb-server -y
+
+RUN sudo systemctl start mariadb
+    
+EXPOSE 3306
+
 CMD ["mariadbd"]
+>>>>>>> Stashed changes
