@@ -1,21 +1,12 @@
-FROM debian:trixie
+ARG IMAGE_VERSION=trixie
 
-<<<<<<< Updated upstream
-RUN apt update && apt install -y mariadb-server
+FROM debian:${IMAGE_VERSION}
 
+RUN apt update -y && apt install -y mariadb-server
+
+# runtime files -> /run/mysqld
+# by installing mariadb-server it creates "mysql -> system user", "mysql -> group"
 RUN mkdir -p /run/mysqld && \
 	chown -R mysql:mysql /run/mysqld
 
-EXPOSE 3306
-
 CMD ["mariadbd", "--user=mysql"]
-=======
-RUN sudo apt update -y
-RUN sudo apt install mariadb-server -y
-
-RUN sudo systemctl start mariadb
-    
-EXPOSE 3306
-
-CMD ["mariadbd"]
->>>>>>> Stashed changes

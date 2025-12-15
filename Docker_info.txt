@@ -1,13 +1,52 @@
 >>> Docker Commands <<<
 	sudo docker images		// show images info
 	sudo docker build "Dockerfile"		// dockerfile blueprint of an image, command create imgae from Dockerfile
-	
+	sudo docker image pull "image name"
+	sudo docker exec -> execute the container to intract with it
+	sudo docker stop	->	stop container from runing
+	docker system prune	-> clean up
 	>>> some times we need to delete first the container then the image
 	// delete a container:
 	sudo docker ps -a		// will shows all info about container you have and it's ID
 	sudo docker rm 7e492d1fac27		// delete container
 	sudo docker rmi f7931603f70e	// delete an imgae
 	sudo docker build -t 'Image identifier' 'path of dockerfile'
+		-t	->	tag the image with a name
+	sudo run -d -> -d (foreground mode)
+		Container keeps running even if you close the terminal.
+	sudo docker run --rm -d -p 8080:80 --name nginx_cont nginx_image
+		TODO: port mapping to learn about it
+		sleep 100 -> is a foreground process
+		sleep 100 & -> is a background process
+		--rm -> once the container is stop will rm
+		-it	-> interactive input && TTY
+
+
+
+
+>>> Docker networking
+		sudo docker network create "net_name"
+	// then connect/Disconnect a container to our network like this:
+		sudo docker network connect "net_name" "container name"
+		sudo docker network Disconnect "net_name" "container name"
+	// you can inspect the network "net_name" like this:
+		sudo docker inspect "net_name"
+	// other way to add container to network
+		sudo docker run --network "net_name"
+	
+
+
+>>> Docker Volumes
+
+
+	# tmpfs ?
+	// docker stored the docker Volumes in -> /var/lib/docker/volumes
+	sudo docker volume create "volume_name"
+	sudo docker volume inspect my_volume
+	sudo docker volume rm "volume_name"
+	sudo docker volume prune	-> delete all local Volumes
+	
+
 
 >>> about mariadb Dockerfile <<<
 	# this command will executed intel the container is start
@@ -16,18 +55,36 @@
 	# Run the MariaDB process as the "mysql" system user
 	CMD ["mariadbd", "--user=mysql"]
 	Run is working (Building docker image)
-	
+
+
+
 >>> about layer caching in docker
 	// every line in the dockerfile is a layer 
 	// if the run this image again and every dockerfile layer is not 
 		changed will just execute the layer caching, if yes will rebuilt
 		and what every after that line that will rebuilt is not change will
 		rebuilt too
+	// each instruction creates layer to help you trubleshoting 
  
 
+
 # instuctions
+	# ARG	-> define key=value
     # FROM
     # COPY
     # RUN	-> executed we image is build
     # EXPOSE
     # CMD	-> executed we container is start
+
+
+
+# sudo apt install / apt-transport-https / ca-certifecates / curl / softwrea-properate-common
+
+
+
+
+
+
+
+
+apt install iputils-ping

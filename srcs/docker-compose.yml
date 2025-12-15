@@ -1,3 +1,54 @@
 # i think here i have to run the three dockerfiles services (ngix, mariadb, wordpress)
 
 # how to write docker-compose ????
+# version: ???
+
+# TODO		volumes
+# TODO		network link
+# TODO		environment var
+
+# field
+# key
+# value
+
+services:
+
+  mariadb:
+    build:
+      dockerfile: Dockerfile
+      context: ./requirements/mariadb/
+    environment:
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - br_net
+
+
+#   wordpress:
+#     build:
+#       dockerfile: Dockerfile
+#       context: ./requirements/wordpress/
+#     depends_on:
+#       - mariadb
+#     volumes:
+#       - db-wordpress:/etc/data
+
+
+
+#   nginx:
+#     build:
+#       dockerfile: Dockerfile
+#       context: ./requirements/nginx/
+#     ports:
+#       - "9000:9000"
+#     depends_on:
+#       - wordpress
+
+
+networks:
+  costume_network:
+    name: br_net
+    driver: bridge
+
