@@ -3,6 +3,8 @@
 # how to write docker-compose ????
 # version: ???
 
+# Docker network handles DNS
+
 # TODO		volumes
 # TODO		network link
 # TODO		environment var
@@ -18,23 +20,33 @@ services:
       dockerfile: Dockerfile
       context: ./requirements/mariadb/
     environment:
+      - MYSQL_HOSTNAME
       - MYSQL_USER
       - MYSQL_PASSWORD
+      - MYSQL_ROOT_PASSWORD
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - mariadb-data:/var/lib/mysql # -> This directory contains all the database files
     networks:
       - br_net
 
 
-#   wordpress:
-#     build:
-#       dockerfile: Dockerfile
-#       context: ./requirements/wordpress/
-#     depends_on:
-#       - mariadb
-#     volumes:
-#       - db-wordpress:/etc/data
+  wordpress:
+    build:
+      dockerfile: Dockerfile
+      context: ./requirements/wordpress/
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    environment:
+      - DOMAIN_NAME
+      - ADMIN_USER
+      - ADMIN_PASSWORD
 
+    volumes:
+      - wordpress-data:/etc/data
+
+    networks:
+      - br_net
 
 
 #   nginx:
@@ -46,9 +58,10 @@ services:
 #     depends_on:
 #       - wordpress
 
+volumes:
+  mariadb-data:
+  wordpress-data:
 
 networks:
-  costume_network:
-    name: br_net
+  br_net:
     driver: bridge
-
