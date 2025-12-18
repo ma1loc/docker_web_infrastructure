@@ -10,4 +10,4 @@ RUN apt update -y && apt upgrade -y \
 RUN mkdir -p /run/mysqld && \
 	chown -R mysql:mysql /run/mysqld
 
-CMD ["mariadbd", "--user=mysql"]
+CMD [ "mariadb_setup.sh" ]

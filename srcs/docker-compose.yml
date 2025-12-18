@@ -24,6 +24,7 @@ services:
       - MYSQL_USER
       - MYSQL_PASSWORD
       - MYSQL_ROOT_PASSWORD
+      - WORDPRESS_DB_NAME
     volumes:
       - mariadb-data:/var/lib/mysql # -> This directory contains all the database files
     networks:
