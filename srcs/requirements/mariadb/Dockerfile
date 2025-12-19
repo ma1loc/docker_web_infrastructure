@@ -3,11 +3,17 @@ ARG IMAGE_VERSION=trixie
 FROM debian:${IMAGE_VERSION}
 
 RUN apt update -y && apt upgrade -y \
-	apt install -y mariadb-server
+	&& apt install -y mariadb-server
 
 # runtime files -> /run/mysqld
 # by installing mariadb-server it creates "mysql -> system user", "mysql -> group"
+# MariaDB needs this for the socket and PID file.
 RUN mkdir -p /run/mysqld && \
 	chown -R mysql:mysql /run/mysqld
 
-CMD [ "mariadb_setup.sh" ]
+# COPY ./config/init_mariadb.sh /
+COPY ./config/init_mariadb.sh /usr/local/bin/init_mariadb.sh
+
+RUN chmod +x /usr/local/bin/init_mariadb.sh
+
+CMD [ "/usr/local/bin/init_mariadb.sh" ]

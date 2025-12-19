@@ -20,34 +20,36 @@ services:
       dockerfile: Dockerfile
       context: ./requirements/mariadb/
     environment:
-      - MYSQL_HOSTNAME
+      # sql
       - MYSQL_USER
+      - MYSQL_HOSTNAME
       - MYSQL_PASSWORD
-      - MYSQL_ROOT_PASSWORD
-      - WORDPRESS_DB_NAME
+      # wordpress
+      - WORDPRESS_USER  # used
+      - WORDPRESS_PASS  # used
+      - WORDPRESS_DB_NAME # used
     volumes:
       - mariadb-data:/var/lib/mysql # -> This directory contains all the database files
     networks:
       - br_net
 
+#   wordpress:
+#     build:
+#       dockerfile: Dockerfile
+#       context: ./requirements/wordpress/
+#     depends_on:
+#       mariadb:
+#         condition: service_healthy
+#     environment:
+#       - DOMAIN_NAME
+#       - ADMIN_USER
+#       - ADMIN_PASSWORD
 
-  wordpress:
-    build:
-      dockerfile: Dockerfile
-      context: ./requirements/wordpress/
-    depends_on:
-      mariadb:
-        condition: service_healthy
-    environment:
-      - DOMAIN_NAME
-      - ADMIN_USER
-      - ADMIN_PASSWORD
+#     volumes:
+#       - wordpress-data:/etc/data
 
-    volumes:
-      - wordpress-data:/etc/data
-
-    networks:
-      - br_net
+#     networks:
+#       - br_net
 
 
 #   nginx:

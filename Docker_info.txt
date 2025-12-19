@@ -20,7 +20,8 @@
 		sleep 100 & -> is a background process
 		--rm -> once the container is stop will rm
 		-it	-> interactive input && TTY
-
+	sudo docker compose -f docker-compose.yml logs mariadb
+		// see the log of the container
 
 
 
@@ -80,11 +81,72 @@
 
 # sudo apt install / apt-transport-https / ca-certifecates / curl / softwrea-properate-common
 
-
-
-
-
-
-
-
+# ping installtion
 apt install iputils-ping
+
+# get the pid of the last command
+	echo $!
+# get the exit status
+	echo $?
+# get the last command
+	echo !!
+
+# Enter your MYSQL_ROOT_PASSWORD, then:
+SHOW DATABASES;
+USE wordpress;
+SELECT User, Host FROM mysql.user;
+
+
+services:
+  mariadb:
+    build:
+      context: ./requirements/mariadb/
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - WORDPRESS_DB_NAME=${WORDPRESS_DB_NAME}
+      - WORDPRESS_USER=${WORDPRESS_USER}
+      - WORDPRESS_PASSWORD=${WORDPRESS_PASSWORD}
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    networks:
+      - br_net
+    restart: unless-stopped
+
+  wordpress:
+    build:
+      context: ./requirements/wordpress/
+    depends_on:
+      - mariadb
+    environment:
+      - WORDPRESS_DB_HOST=mariadb
+      - WORDPRESS_DB_NAME=${WORDPRESS_DB_NAME}
+      - WORDPRESS_DB_USER=${WORDPRESS_USER}
+      - WORDPRESS_DB_PASSWORD=${WORDPRESS_PASSWORD}
+    volumes:
+      - wordpress-data:/var/www/html/wordpress
+    networks:
+      - br_net
+    restart: unless-stopped
+
+  nginx:
+    build:
+      context: ./requirements/nginx/
+    depends_on:
+      - wordpress
+    ports:
+      - "443:443"
+    volumes:
+      - wordpress-data:/var/www/html/wordpress
+    networks:
+      - br_net
+    restart: unless-stopped
+
+volumes:
+  mariadb-data:
+    driver: local
+  wordpress-data:
+    driver: local
+
+networks:
+  br_net:
+    driver: bridge
