@@ -6,6 +6,10 @@ Inception is a system administration and DevOps–oriented project from **1337 S
 
 This project focuses on understanding how containers work together to form a reliable and scalable environment, rather than relying on prebuilt images or shortcuts.
 
+## Docker containers structure
+<img width="760" height="889" alt="Screenshot From 2025-12-19 13-32-46" src="https://github.com/user-attachments/assets/b2bf9830-a087-4f35-b3c8-a5948fa9dfcf" />
+
+
 ## What I Learned
 
 * Docker fundamentals and container lifecycle
