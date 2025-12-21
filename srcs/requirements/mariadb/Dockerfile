@@ -13,6 +13,9 @@ RUN mkdir -p /run/mysqld && \
 
 # COPY ./config/init_mariadb.sh /
 COPY ./config/init_mariadb.sh /usr/local/bin/init_mariadb.sh
+COPY ./config/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+
+# /etc/mysql/mariadb.conf.d/50-server.cnf
 
 RUN chmod +x /usr/local/bin/init_mariadb.sh
 

@@ -150,3 +150,14 @@ volumes:
 networks:
   br_net:
     driver: bridge
+
+
+
+
+
+
+
+// wordpress resuorce for instaltion
+https://developer.wordpress.org/advanced-administration/before-install/
+https://wp-cli.org/
+https://www.cloudways.com/blog/wordpress-wp-config/

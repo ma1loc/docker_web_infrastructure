@@ -2,28 +2,28 @@
 
 set -e
 
-if [ ! -d "/var/lib/mysql/mysql" ]; then
-	echo "path is not exist /var/lib/mysql [ >>>>> IS CREATED <<<<< ]"
-	mysql_install_db --user=mysql --datadir=/var/lib/mysql
 
-	mariadbd --user=mysql --datadir=/var/lib/mysql &
+mysql_install_db --user=mysql --datadir=/var/lib/mysql
 
-	MARIADB_PID=$!
+mariadbd --user=mysql --datadir=/var/lib/mysql &
 
-	sleep 5
+MARIADB_PID=$!
+
+sleep 5
 
 # >>> SETUP wordpress database
-	mysql -u root << EOF
+# CREATE DATABASE IF NOT EXISTS ${WORDPRESS_DB_NAME};
+
+mysql -u root <<EOF
 CREATE DATABASE IF NOT EXISTS ${WORDPRESS_DB_NAME};
-CREATE USER IF NOT EXISTS '${WORDPRESS_USER}'@'%' IDENTIFIED BY '${WORDPRESS_PASS}';
-GRANT ALL PRIVILEGES ON ${WORDPRESS_DB_NAME}.* TO '${WORDPRESS_USER}'@'%';
+CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
+GRANT ALL PRIVILEGES ON ${WORDPRESS_DB_NAME}.* TO '${MYSQL_USER}'@'%';
 FLUSH PRIVILEGES;
 EOF
 
-	kill $MARIADB_PID # >>> kill is not waiting intel the preccess killed 
-	wait $MARIADB_PID # >>> that why wait for
 
-fi
+kill $MARIADB_PID # >>> kill is not waiting intel the preccess killed 
+wait $MARIADB_PID # >>> that why wait for
 
 exec mariadbd --user=mysql --datadir=/var/lib/mysql		# main process
 
@@ -59,3 +59,9 @@ exec mariadbd --user=mysql --datadir=/var/lib/mysql		# main process
 		SHOW DATABASES;
 END
 
+#	DATABASE COMMANDS TO KNOW
+	# SHOW DATABASES
+	# CREATE DATABASE 'db-name'
+	# DROP DATABASE 'db-name to delete'
+	# USE 'db-name' select new db
+	# SHOW TABLES -> show info table
