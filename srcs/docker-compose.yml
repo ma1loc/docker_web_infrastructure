@@ -9,10 +9,6 @@
 # TODO		network link
 # TODO		environment var
 
-# field
-# key
-# value
-
 services:
 
   mariadb:
