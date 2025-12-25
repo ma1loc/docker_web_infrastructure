@@ -6,8 +6,6 @@ curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.pha
 mv ./wp-cli.phar /usr/local/bin/wp	
 chmod +x /usr/local/bin/wp
 
-wp cli update
-
 # >>> download wp core files like {wp-admin, wp-includes, index.php}
 wp core download --allow-root \
 	--path=/var/www/html/wordpress
@@ -21,7 +19,5 @@ wp config create --allow-root \
 	--dbpass="$WORDPRESS_DB_PASSWORD" \
 	--dbhost="$WORDPRESS_DB_HOST"
 
-# >>> '-S' <addr>:<port> Run with built-in web server.
-#		0.0.0.0 -> listen on all interfaces with 80 → HTTP port
-# >>> -t <docroot>     Specify document root <docroot> for built-in web server.
-exec php -S 0.0.0.0:80 -t /var/www/html/wordpress
+# PHP-FPM ----------> "is a get way" -> FastCGI Process Manager (FPM)
+exec php-fpm8.4 -F

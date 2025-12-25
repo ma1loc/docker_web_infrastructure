@@ -154,10 +154,57 @@ networks:
 
 
 
+# <<< extension >>>
 
+# php-curl
+#   curl http request, fetch something over HTTP or HTTPS.
+#   for example install a plugin 
+#   wordpress fetch that plogin using HTTP request
 
+# php-gd
+#   is a graphical library
+#   that allow wordpress to create, manipulate, and resize images
+
+# php-mbstring
+#   mbstring stands for “multibyte string”.
+#   allows WordPress to correctly handle Unicode and multibyte character encodings 
+#   (like UTF-8, Japanese, Arabic, emojis, etc.).
+
+# php-xml -> allows WordPress to parse and handle XML documents.
+
+# php-xmlrpc -> not use it 
+
+# php-soap -> not use it
+
+# php-intl -> not use it 
+
+# php-zip 
+# example installing plugins using "php-curl"
+# the plugin it comes ziped we need php-zip to install it
+
+# && apt install -y mariadb-client \
+# RUN apt update -y && apt upgrade -y \
+# 	&& apt install -y \
+# 	curl \
+# 	php-fpm \
+# 	php-mysql \
+# 	php-curl \
+# 	php-gd \
+# 	php-mbstring \
+# 	php-xml \
+# 	php-zip \
+# 	unzip
+
+# RUN apt update -y && apt upgrade -y \
+# 	&& apt install -y curl unzip php8.3-fpm php8.3-mysql \
+# 	php8.3-curl php8.3-gd php8.3-mbstring php8.3-xml \
+# 	php8.3-zip
+
+about the -v delete the volume too
 
 // wordpress resuorce for instaltion
 https://developer.wordpress.org/advanced-administration/before-install/
 https://wp-cli.org/
 https://www.cloudways.com/blog/wordpress-wp-config/
+https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-debian-11
+

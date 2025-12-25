@@ -2,9 +2,9 @@ DB_IMAGE_NAME=srcs-mariadb
 WP_IMAGE_NAME=srcs-wordpress
 NGX_IMAGE_NAME=srcs-nginx
 
-DB_CONT_NAME=srcs-mariadb-1
-WP_CONT_NAME=srcs-wordpress-1
-NGX_CONT_NAME=srcs-nginx-1
+# DB_CONT_NAME=mariadb
+# WP_CONT_NAME=wordpress
+# NGX_CONT_NAME=nginx
 
 # Start containers
 up:
