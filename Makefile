@@ -6,7 +6,6 @@ NGX_IMAGE_NAME=srcs-nginx
 # WP_CONT_NAME=wordpress
 # NGX_CONT_NAME=nginx
 
-# Start containers
 up:
 	sudo docker compose -f ./srcs/docker-compose.yml up -d --build
 

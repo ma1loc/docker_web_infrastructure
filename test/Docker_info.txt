@@ -200,11 +200,17 @@ networks:
 # 	php8.3-curl php8.3-gd php8.3-mbstring php8.3-xml \
 # 	php8.3-zip
 
+# Q&A
 about the -v delete the volume too
+why www-data in the wordpress and the nginx both
+wordpress -> /etc/php/8.4/fpm/pool.d/www.conf
+nginx -> /etc/nginx/nginx.conf
 
 // wordpress resuorce for instaltion
 https://developer.wordpress.org/advanced-administration/before-install/
 https://wp-cli.org/
 https://www.cloudways.com/blog/wordpress-wp-config/
 https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-debian-11
-
+https://www.youtube.com/watch?v=VH4gXcvkmOY
+https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu
+https://nginx.org/en/docs/http/ngx_http_ssl_module.html	
