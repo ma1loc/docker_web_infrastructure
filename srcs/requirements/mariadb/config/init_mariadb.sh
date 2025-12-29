@@ -8,8 +8,11 @@ mariadbd --user=mysql --datadir=/var/lib/mysql &
 
 MARIADB_PID=$!
 
-sleep 5
 
+# sleep 5
+until mysqladmin ping --silent; do
+    sleep 1
+done
 # >>> SETUP wordpress database
 # CREATE DATABASE IF NOT EXISTS ${WORDPRESS_DB_NAME};
 
