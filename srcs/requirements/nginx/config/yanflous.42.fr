@@ -2,15 +2,12 @@
 server {
     listen 443 ssl;
     listen [::]:443 ssl;
-    server_name yanflous.42.fr;
+    server_name yanflous.42.fr www.yanflous.42.fr;
 
-    ssl_certificate         /etc/ssl/certs/nginx-selfsigned.crt
-    ssl_certificate_key     /etc/ssl/private/nginx-selfsigned.key
+    include snippets/self-signed.conf;
+    include snippets/ssl-params.conf;
 
-    include /etc/nginx/snippets/self-signed.conf;
-    include /etc/nginx/snippets/ssl-params.conf;
-
-    root /var/www/yanflous.42.fr/html;
+    root /var/www/html/wordpress;
     index index.html index.htm index.nginx-debian.html;
 
     location / {
