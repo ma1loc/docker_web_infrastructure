@@ -1,0 +1,56 @@
+# server {	<<<	how Nginx should handle requests for a specific domain
+
+	# >>> listen on port 442, enable ssl/tls | [::] enable ipv6
+    # listen 443 ssl;
+    # listen [::]:443 ssl;
+
+	# >>> domains 
+    # server_name yanflous.42.fr www.yanflous.42.fr;
+
+	# >>> include the ssl/tls configuration
+    # include snippets/self-signed.conf;
+    # include snippets/ssl-params.conf;
+
+	# >>> root dir where the NGINX serv static files <html, css, js, etc>
+    # root /var/www/html/wordpress;
+    
+	# >>> when client visit the "server_name" NGINX will look thghout the "root"
+	#		to get the befult page for exmaple will be the "index.php"
+	# index index.php index.html index.htm;
+
+	
+	# >>> if some one visit a subdomain the yanflous/hello is hello or hello/
+	#		if hello and hello/ not exist, wordpress will execute the /index.php?$args
+	#		with it's query parameters, if the user done a url like that
+	#		/index.php?page=2 every thing after the ? will hold it in $args as query parameters
+    # location / {
+    #     try_files $uri $uri/ /index.php?$args;
+    # }
+
+
+	# >>> this part tell the nginx how to execute the PHP files:
+	#		'~' tells nginx to use regex
+	#		\.php$ -> match .php at the end of input proveded
+	# >>> if there a match: `index.php`, `wp-admin.php`, `wp-login.php`
+	# 		> include snippets/fastcgi-php.conf:
+	#			load a securty configuration file like make sure file ***.php is exist
+	#		> fastcgi_pass wordpress:9000: 
+	#			when nginx get a request match the ruls it forwards it to the php-fpm to handel the php files
+	#			thghout contianer name "wordpress" in port 9000
+	#		> fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+	#			fastcgi_param -> setting a parameter and send it to PHP-FPM in out case
+	#			SCRIPT_FILENAME -> tell the PHP about the full path of the ****.php file where looking for
+	#			$document_root -> /var/www/html/wordpress
+	#			$fastcgi_script_name -> index.php
+	#			the $document_root and $fastcgi_script_name NGINX set them auto based on the server block
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass wordpress:9000;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}

@@ -16,3 +16,6 @@ down:
 fclean: down
 	sudo docker compose -f ./srcs/docker-compose.yml down -v --rmi all --remove-orphans
 	sudo docker system prune -af
+
+# mkdir -p /home/yanflous/data/mariadb
+# mkdir -p /home/yanflous/data/wordpress

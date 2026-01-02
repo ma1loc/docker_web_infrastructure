@@ -21,7 +21,7 @@ services:
       - MYSQL_USER
       - MYSQL_PASSWORD
     volumes:
-      - mariadb-data:/var/lib/mysql # -> This directory contains all the database files
+      - mariadb-data:/var/lib/mysql # >>> This directory contains all the database files
     networks:
       - br_net
     restart: unless-stopped
@@ -35,14 +35,21 @@ services:
     depends_on:
       - mariadb
     environment:
-      - MYSQL_USER
-      - MYSQL_PASSWORD
-      - WORDPRESS_DB_HOST
-      - WORDPRESS_DB_NAME
-      - WORDPRESS_DB_USER
-      - WORDPRESS_DB_PASSWORD
+      - DOMAIN_NAME # done
+      - MYSQL_USER # not yet
+      - MYSQL_PASSWORD # not yet
+      - WP_DB_HOST
+      - WP_DB_NAME
+      - WR_DB_USER
+      - WP_DB_PASSWORD
+      - WP_ADMIN_USER # done
+      - WP_ADMIN_PASSWORD # done
+      - WP_ADMIN_EMAIL
+      - WP_USER
+      - WP_USER_PASSWORD
+      - WP_USER_EMAIL
     volumes:
-      - wordpress-data:/var/www/html/wordpress # -> here persists all core files, themes, plugins, and uploads.
+      - wordpress-data:/var/www/html/wordpress # >>> here persists all core files, themes, plugins, and uploads.
     networks:
       - br_net
     restart: unless-stopped
@@ -66,7 +73,17 @@ services:
 
 volumes:
   mariadb-data:
+    driver: local   # >>> docker will use the local driver
+    driver_opts:
+      type: none    # >>> filesystem type
+      o: bind       # >>> (options) bind mount local path to the continer
+      device: /home/yanflous/data/mariadb   # >>> path to store data to
   wordpress-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/yanflous/data/wordpress
 
 networks:
   br_net:
