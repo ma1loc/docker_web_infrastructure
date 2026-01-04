@@ -17,7 +17,7 @@ services:
       context: ./requirements/mariadb/
     environment:
       - MYSQL_ROOT_PASSWORD
-      - WORDPRESS_DB_NAME
+      - WP_DB_NAME
       - MYSQL_USER
       - MYSQL_PASSWORD
     volumes:
@@ -40,7 +40,7 @@ services:
       - MYSQL_PASSWORD # not yet
       - WP_DB_HOST
       - WP_DB_NAME
-      - WR_DB_USER
+      - WP_DB_USER
       - WP_DB_PASSWORD
       - WP_ADMIN_USER # done
       - WP_ADMIN_PASSWORD # done

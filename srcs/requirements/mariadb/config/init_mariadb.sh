@@ -13,13 +13,13 @@ MARIADB_PID=$!
 until mysqladmin ping --silent; do
     sleep 1
 done
-# >>> SETUP wordpress database
-# CREATE DATABASE IF NOT EXISTS ${WORDPRESS_DB_NAME};
 
-mysql -u root <<EOF
-CREATE DATABASE IF NOT EXISTS ${WORDPRESS_DB_NAME};
+# >>> SETUP wordpress database
+mysql -u root << EOF
+ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';
+CREATE DATABASE IF NOT EXISTS ${WP_DB_NAME};
 CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
-GRANT ALL PRIVILEGES ON ${WORDPRESS_DB_NAME}.* TO '${MYSQL_USER}'@'%';
+GRANT ALL PRIVILEGES ON ${WP_DB_NAME}.* TO '${MYSQL_USER}'@'%';
 FLUSH PRIVILEGES;
 EOF
 
@@ -34,7 +34,7 @@ exec mariadbd --user=mysql --datadir=/var/lib/mysql		# main process
 <<END
 	HERE WILL EXPLINE # SETUP wordpress database
 	
-	#1 -> CREATE DATABASE IF NOT EXISTS ${WORDPRESS_DB_NAME};
+	#1 -> CREATE DATABASE IF NOT EXISTS ${WP_DB_NAME};
 		is create a database in this path /var/lib/mysql/wordpress_db/
 		table files, indexes, metadata
 	
@@ -46,10 +46,10 @@ exec mariadbd --user=mysql --datadir=/var/lib/mysql		# main process
     		↓ (Docker bridge network)
 		MariaDB container
 
-	#3 -> GRANT ALL PRIVILEGES ON ${WORDPRESS_DB_NAME}.* TO '${WORDPRESS_USER}'@'%';
+	#3 -> GRANT ALL PRIVILEGES ON ${WP_DB_NAME}.* TO '${WORDPRESS_USER}'@'%';
 		it telles ${WORDPRESS_USER} inherat all the privileges mena's it can done
 			SELECT, INSERT, UPDATE, DELETE, CREATE TABLE, DROP TABLE, etc…
-		but only on ${WORDPRESS_DB_NAME}.*
+		but only on ${WP_DB_NAME}.*
 		* after . = all objects in this database
 	
 	#4 -> FLUSH PRIVILEGES;

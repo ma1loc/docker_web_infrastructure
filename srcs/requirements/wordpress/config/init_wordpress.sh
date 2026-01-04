@@ -19,9 +19,9 @@ wp config create --allow-root \
 	--dbhost="$WP_DB_HOST"
 
 # >>> wait for the database to load
-until wp db check --allow-root --path=/var/www/html/wordpress 2>/dev/null; do
-    sleep 2
-done
+# until wp db check --allow-root --path=/var/www/html/wordpress 2>/dev/null; do
+#     sleep 2
+# done
 
 # >>> check if the wordpress alrady installed
 if ! wp core is-installed --allow-root --path=/var/www/html/wordpress 2>/dev/null; then
@@ -43,4 +43,4 @@ fi
 # ------------------------------------------------- #
 
 # PHP-FPM ----------> "is a get way" -> FastCGI Process Manager (FPM)
-exec php-fpm8.4 -F
+exec php-fpm8.4 -F -R
