@@ -1,46 +1,30 @@
 #!/bin/bash
 
-# >>> install wp-cli tool to manage WordPress using terminal command instead of the web interface
-curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-mv ./wp-cli.phar /usr/local/bin/wp	
-chmod +x /usr/local/bin/wp
+# Create directory if it doesn't exist
+mkdir -p /var/www/html/wordpress
+cd /var/www/html/wordpress
 
-# >>> download wp core files like {wp-admin, wp-includes, index.php}
-wp core download --allow-root \
-	--path=/var/www/html/wordpress
+# if ! wp core is-installed --allow-root; then
+if [ ! -f "wp-config.php" ]; then
 
-#  >>> CREATE The base configuration for WordPress "wp-config.php"
-# 		This is how WordPress connects to MariaDB
-wp config create --allow-root \
-	--path="/var/www/html/wordpress/" \
-	--dbname="$WP_DB_NAME" \
-	--dbuser="$WP_DB_USER" \
-	--dbpass="$WP_DB_PASSWORD" \
-	--dbhost="$WP_DB_HOST"
+    wp core download --allow-root
+    
+    wp config create --allow-root \
+        --dbname="$WP_DB_NAME" \
+        --dbuser="$MYSQL_USER" \
+        --dbpass="$MYSQL_PASSWORD" \
+        --dbhost="mariadb:3306"
 
-# >>> wait for the database to load
-# until wp db check --allow-root --path=/var/www/html/wordpress 2>/dev/null; do
-#     sleep 2
-# done
+    wp core install --allow-root \
+        --url="https://$DOMAIN_NAME" \
+        --title="Inception" \
+        --admin_user="$WP_ADMIN_USER" \
+        --admin_password="$WP_ADMIN_PASSWORD" \
+        --admin_email="$WP_ADMIN_EMAIL"
 
-# >>> check if the wordpress alrady installed
-if ! wp core is-installed --allow-root --path=/var/www/html/wordpress 2>/dev/null; then
-	# >>> install wp, create wp database table, create admin-user, set URL
-	wp core install --allow-root \
-		--path=/var/www/html/wordpress \
-		--title="Inception" \
-		--url="https://$DOMAIN_NAME" \
-		--admin_user="$WP_ADMIN_USER" \
-		--admin_password="$WP_ADMIN_PASSWORD" \
-		--admin_email="$WP_ADMIN_EMAIL"
-
-	# >>> create normal user
-	wp user create "$WP_USER" "$WP_USER_EMAIL" --allow-root \
-		--path=/var/www/html/wordpress \
-		--user_pass="$WP_USER_PASSWORD" \
-		--role=author # >>> cannot manage the site or othes
+    wp user create "$WP_USER" "$WP_USER_EMAIL" --user_pass="$WP_USER_PASSWORD" --role=author --allow-root
 fi
-# ------------------------------------------------- #
 
-# PHP-FPM ----------> "is a get way" -> FastCGI Process Manager (FPM)
+mkdir -p /run/php
+
 exec php-fpm8.4 -F -R

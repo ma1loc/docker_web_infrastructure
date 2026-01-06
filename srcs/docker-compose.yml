@@ -49,7 +49,7 @@ services:
       - WP_USER_PASSWORD
       - WP_USER_EMAIL
     volumes:
-      - wordpress-data:/var/www/html/wordpress # >>> here persists all core files, themes, plugins, and uploads.
+      - wordpress-data:/var/www/html  # >>> here persists all core files, themes, plugins, and uploads.
     networks:
       - br_net
     restart: unless-stopped
@@ -66,7 +66,7 @@ services:
     environment:
       - DOMAIN_NAME
     volumes:
-      - wordpress-data:/var/www/html/wordpress:ro
+      - wordpress-data:/var/www/html:ro
     networks:
       - br_net
     restart: unless-stopped
