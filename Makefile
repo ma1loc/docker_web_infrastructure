@@ -22,6 +22,9 @@ clean: down
 
 fclean: clean
 	@sudo docker compose -f $(COMPOSE_FILE) down -v
+# 	remve all data about unused or stoped continers, netwoks, images etc...
+	@sudo docker system prune
+	@sudo docker image prune
 	@sudo rm -rf $(LOCAL_DATA_PATH)/mariadb
 	@sudo rm -rf $(LOCAL_DATA_PATH)/wordpress
 

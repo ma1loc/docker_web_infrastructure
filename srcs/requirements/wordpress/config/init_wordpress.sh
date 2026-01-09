@@ -27,4 +27,4 @@ fi
 
 mkdir -p /run/php
 
-exec php-fpm8.4 -F -R
+exec php-fpm8.2 -F -R

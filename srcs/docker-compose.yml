@@ -1,16 +1,6 @@
-# i think here i have to run the three dockerfiles services (ngix, mariadb, wordpress)
-
-# how to write docker-compose ????
-# version: ???
-
-# Docker network handles DNS
-
-# TODO		volumes
-# TODO		network link
-# TODO		environment var
-
 services:
   mariadb:
+    image: mariadb:v1
     container_name: mariadb
     build:
       dockerfile: Dockerfile
@@ -28,6 +18,7 @@ services:
 
 
   wordpress:
+    image: wordpress:v1
     container_name: wordpress
     build:
       dockerfile: Dockerfile
@@ -35,15 +26,15 @@ services:
     depends_on:
       - mariadb
     environment:
-      - DOMAIN_NAME # done
-      - MYSQL_USER # not yet
-      - MYSQL_PASSWORD # not yet
+      - DOMAIN_NAME
+      - MYSQL_USER
+      - MYSQL_PASSWORD
       - WP_DB_HOST
       - WP_DB_NAME
       - WP_DB_USER
       - WP_DB_PASSWORD
-      - WP_ADMIN_USER # done
-      - WP_ADMIN_PASSWORD # done
+      - WP_ADMIN_USER
+      - WP_ADMIN_PASSWORD
       - WP_ADMIN_EMAIL
       - WP_USER
       - WP_USER_PASSWORD
@@ -55,6 +46,7 @@ services:
     restart: unless-stopped
 
   nginx:
+    image: nginx:v1
     container_name: nginx
     build:
       dockerfile: Dockerfile

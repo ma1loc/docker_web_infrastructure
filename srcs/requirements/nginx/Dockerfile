@@ -1,6 +1,4 @@
-ARG IMAGE_VERSION=trixie
-
-FROM debian:${IMAGE_VERSION}
+FROM debian:bookworm
 
 # -> "X.509” is a public key infrastructure -> make a self-signed certificate
 #		certificate signing request (CSR) management
@@ -16,6 +14,7 @@ FROM debian:${IMAGE_VERSION}
 # -> "-keyout" path of the privet key generated
 # -> "-out" path of the cert generated
 # NOTE: path of the output will be in '/etc/ssl'
+
 RUN apt update -y && apt upgrade -y && apt install nginx -y \
 	&& apt install openssl
 
