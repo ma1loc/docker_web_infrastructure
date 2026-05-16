@@ -12,4 +12,6 @@ COPY ./config/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 
 RUN chmod +x /usr/local/bin/init_wordpress.sh
 
+EXPOSE 9000
+
 CMD [ "/usr/local/bin/init_wordpress.sh" ]

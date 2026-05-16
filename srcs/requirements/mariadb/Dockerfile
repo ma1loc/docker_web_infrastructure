@@ -11,4 +11,6 @@ COPY ./config/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 COPY ./config/init_mariadb.sh /usr/local/bin/init_mariadb.sh
 RUN chmod +x /usr/local/bin/init_mariadb.sh
 
+EXPOSE 3306
+
 CMD [ "/usr/local/bin/init_mariadb.sh" ]

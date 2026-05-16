@@ -25,7 +25,11 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 
 COPY ./config/self-signed.conf /etc/nginx/snippets/self-signed.conf
 COPY ./config/ssl-params.conf /etc/nginx/snippets/ssl-params.conf
-COPY ./config/yanflous.42.fr /etc/nginx/sites-available/yanflous.42.fr
-COPY ./config/yanflous.42.fr /etc/nginx/sites-enabled/yanflous.42.fr
+
+# nginx.config files - serving static files
+COPY ./config/nginx.config /etc/nginx/sites-available/nginx.config
+COPY ./config/nginx.config /etc/nginx/sites-enabled/nginx.config
+
+EXPOSE 443
 
 CMD [ "nginx", "-g", "daemon off;" ]

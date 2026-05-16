@@ -45,6 +45,7 @@ services:
       - br_net
     restart: unless-stopped
 
+  # nginx: web-server
   nginx:
     image: nginx:v1
     container_name: nginx
