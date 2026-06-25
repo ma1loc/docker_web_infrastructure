@@ -6,16 +6,15 @@ services:
       dockerfile: Dockerfile
       context: ./requirements/mariadb/
     environment:
-      - MYSQL_ROOT_PASSWORD
       - WP_DB_NAME
       - MYSQL_USER
       - MYSQL_PASSWORD
+      - MYSQL_ROOT_PASSWORD
     volumes:
-      - mariadb-data:/var/lib/mysql # >>> This directory contains all the database files
+      - mariadb-data:/var/lib/mysql # > DB files *
     networks:
       - br_net
     restart: unless-stopped
-
 
   wordpress:
     image: wordpress:v1
@@ -27,12 +26,9 @@ services:
       - mariadb
     environment:
       - DOMAIN_NAME
+      - WP_DB_NAME
       - MYSQL_USER
       - MYSQL_PASSWORD
-      - WP_DB_HOST
-      - WP_DB_NAME
-      - WP_DB_USER
-      - WP_DB_PASSWORD
       - WP_ADMIN_USER
       - WP_ADMIN_PASSWORD
       - WP_ADMIN_EMAIL
@@ -40,12 +36,11 @@ services:
       - WP_USER_PASSWORD
       - WP_USER_EMAIL
     volumes:
-      - wordpress-data:/var/www/html  # >>> here persists all core files, themes, plugins, and uploads.
+      - wordpress-data:/var/www/html  # > static files *
     networks:
       - br_net
     restart: unless-stopped
 
-  # nginx: web-server
   nginx:
     image: nginx:v1
     container_name: nginx
@@ -59,18 +54,18 @@ services:
     environment:
       - DOMAIN_NAME
     volumes:
-      - wordpress-data:/var/www/html:ro
+      - wordpress-data:/var/www/html:ro # > wp sharing dir with nginx(read-only) *
     networks:
       - br_net
     restart: unless-stopped
 
 volumes:
   mariadb-data:
-    driver: local   # >>> docker will use the local driver
+    driver: local   # > hosting driver(local) *
     driver_opts:
-      type: none    # >>> filesystem type
-      o: bind       # >>> (options) bind mount local path to the continer
-      device: /home/yanflous/data/mariadb   # >>> path to store data to
+      type: none    # > file-system type *
+      o: bind       # > bind device to container *
+      device: /home/yanflous/data/mariadb   # > destination path *
   wordpress-data:
     driver: local
     driver_opts:

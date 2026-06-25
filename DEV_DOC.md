@@ -40,25 +40,20 @@ Paste the following template and replace values with your own:
 DOMAIN_NAME="yanflous.42.fr"
 
 # MySQL
-WP_DB_NAME="wordpress"
-MYSQL_USER="yanflous"
-MYSQL_PASSWORD="pass123"
-MYSQL_ROOT_PASSWORD="root123"
-
-# WordPress
-WP_DB_USER="yanflous"
-WP_DB_PASSWORD="pass123"
-WP_DB_HOST="mariadb"
+WP_DB_NAME="wordpress database name"
+MYSQL_USER="user name"
+MYSQL_PASSWORD="password"
+MYSQL_ROOT_PASSWORD="root pass"
 
 # WordPress User
-WP_USER="yanflous_user"
+WP_USER="wp user"
+WP_USER_PASSWORD="password"
 WP_USER_EMAIL="user@student.42.fr"
-WP_USER_PASSWORD="UserPass123!"
 
 # WordPress Admin
-WP_ADMIN_USER="yanflous_admin"
-WP_ADMIN_PASSWORD="pass123!"
-WP_ADMIN_EMAIL="yanflous@student.42.fr"
+WP_ADMIN_USER="admine user name"
+WP_ADMIN_PASSWORD="admine password"
+WP_ADMIN_EMAIL="admine@admin.42.fr"
 ```
 
 > `WP_ADMIN_USER` must not contain "admin" or "administrator" in any form — this is a hard requirement from the subject.
@@ -236,6 +231,36 @@ ls /home/yanflous/data/mariadb
 Bind mounts require the host path to exist and be managed manually. Named volumes let Docker handle initialization — on first run, Docker copies the WordPress files and MariaDB system tables from the image into the volume automatically. This prevents the database from crashing on startup due to missing system tables.
 
 ---
+
+## Verify MariaDB Setup
+
+Connect to the MariaDB container:
+
+```bash
+docker exec -it mariadb mariadb -u root -p'${MYSQL_ROOT_PASSWORD}'
+```
+
+Once inside, run the following queries:
+
+```sql
+-- show all databases, wordpress must be there
+SHOW DATABASES;
+
+-- switch to wordpress database
+USE wordpress;
+
+-- show all tables, wordpress creates them automatically on first run
+SHOW TABLES;
+
+-- show all mariadb users, your user must be there with host '%'
+SELECT user, host FROM mysql.user;
+
+-- show grants for your user, must show ALL PRIVILEGES on wordpress.*
+SHOW GRANTS FOR 'your_user'@'%';
+
+-- show wordpress users, admin account must be there
+SELECT * FROM wp_users;
+```
 
 ## Common issues
 

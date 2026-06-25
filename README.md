@@ -1,6 +1,4 @@
-# Inception — Docker Web Infrastructure
-
-> This project was created as part of the 42 curriculum by [yanflous](https://github.com/ma1loc)
+## This project was created as part of the 42 curriculum by [yanflous](https://github.com/ma1loc)
 
 ---
 
@@ -32,28 +30,25 @@ After cloning the project, all the files required for Inception are placed in th
 > Before building the containers, you must create a `.env` file at `srcs/.env`.
 > Create the file and paste the following template, replacing the values with your own:
 
-```env
+```dotenv
 DOMAIN_NAME="yanflous.42.fr"
 
-WP_DB_NAME="wordpress"
-MYSQL_USER="yanflous"
-MYSQL_PASSWORD="pass123"
-MYSQL_ROOT_PASSWORD="root123"
+# MySQL
+WP_DB_NAME="wordpress database name"
+MYSQL_USER="user name"
+MYSQL_PASSWORD="password"
+MYSQL_ROOT_PASSWORD="root pass"
 
-WP_DB_USER="yanflous"
-WP_DB_PASSWORD="pass123"
-WP_DB_HOST="mariadb"
-
-WP_USER="yanflous_user"
+# WordPress User
+WP_USER="wp user"
+WP_USER_PASSWORD="password"
 WP_USER_EMAIL="user@student.42.fr"
-WP_USER_PASSWORD="UserPass123!"
 
-WP_ADMIN_USER="yanflous_admin"
-WP_ADMIN_PASSWORD="pass123!"
-WP_ADMIN_EMAIL="yanflous@student.42.fr"
+# WordPress Admin
+WP_ADMIN_USER="admine user name"
+WP_ADMIN_PASSWORD="admine password"
+WP_ADMIN_EMAIL="admine@admin.42.fr"
 ```
-
----
 
 A `Makefile` is provided in the root folder to make execution straightforward. To see all available commands, run:
 

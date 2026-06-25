@@ -80,25 +80,20 @@ Create it before running the project using this template:
 DOMAIN_NAME="yanflous.42.fr"
 
 # MySQL
-WP_DB_NAME="wordpress"
-MYSQL_USER="yanflous"
-MYSQL_PASSWORD="pass123"
-MYSQL_ROOT_PASSWORD="root123"
-
-# WordPress
-WP_DB_USER="yanflous"
-WP_DB_PASSWORD="pass123"
-WP_DB_HOST="mariadb"
+WP_DB_NAME="wordpress database name"
+MYSQL_USER="user name"
+MYSQL_PASSWORD="password"
+MYSQL_ROOT_PASSWORD="root pass"
 
 # WordPress User
-WP_USER="yanflous_user"
+WP_USER="wp user"
+WP_USER_PASSWORD="password"
 WP_USER_EMAIL="user@student.42.fr"
-WP_USER_PASSWORD="UserPass123!"
 
 # WordPress Admin
-WP_ADMIN_USER="yanflous_admin"
-WP_ADMIN_PASSWORD="pass123!"
-WP_ADMIN_EMAIL="yanflous@student.42.fr"
+WP_ADMIN_USER="admine user name"
+WP_ADMIN_PASSWORD="admine password"
+WP_ADMIN_EMAIL="admine@admin.42.fr"
 ```
 
 | Variable | Description |
